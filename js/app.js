@@ -1,19 +1,4 @@
 $(function() {
-	// function getExchangeRates() {
-	// 	var request = $.ajax({
-	// 		url: 'https://blockchain.info/nl/ticker',
-	// 		type: 'GET',
-	// 		succes: setExchangeRates(data),
-	// 	});
-	// 	request.done(function(response) {
-	// 		console.log(response);
-	// 	});
-	// };
-
-	// function setExchangeRates(data) {
-	// 	console.log(data);
-	// }
-
 	socket = new WebSocket("ws://ws.blockchain.info/inv");
 
 	socket.onopen = function(msg) {
@@ -33,7 +18,37 @@ $(function() {
 		$.each(data.x.out, function(item) {
 			var from = data.x.inputs[0].prev_out.addr;
 			var to   = data.x.out[item].addr;
-			sys.addEdge(from, to, { alone: true });
+			var amount = data.x.out[item].value / 100000000
+			var edgeData = {
+				amount: amount,
+				visible: true
+			}
+
+			node1 = sys.addNode(from);
+			node2 = sys.addNode(to);
+
+			node1.data = { from: true, visible: true };
+			node2.data.from = { from: false, visible: true };
+
+			sys.addEdge(node1, node2, edgeData);
 		});
 	};
+
+	$('.slider').slider({min: 0, max: 2, step: 0.01});
+	$('.slider').on('slide', function(e, ui) {
+		var sliderValue = ui.value;
+		var eur = Math.round(sliderValue * 670.21 * 100) / 100;
+		var usd = Math.round(sliderValue * 823.44 * 100) / 100;
+
+
+		$('.value-btc').html(sliderValue);
+		$('.value-eur').html(eur);
+		$('.value-usd').html(usd);
+
+
+		sys.eachEdge(function(edge, pt1, pt2) {
+			edge.data.visible = edge.data.amount > sliderValue ? true : false;
+			edge.target.data.visible = edge.data.amount > sliderValue ? true : false;
+		});
+	})
 });

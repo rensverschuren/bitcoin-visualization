@@ -1,3 +1,26 @@
 body {
-	background-color: #999999;
+	background-color: #e0e1de;
+	font-family: 'Droid Sans', sans-serif;
+}
+
+.container {
+	margin: 50px auto 0 auto;
+	width: 1280;
+}
+
+p { width: 600px; }
+
+#viewport {
+	margin-bottom: 20px;
+}
+
+.button {
+	background-color: #e2001a;
+	border-radius: 4px;
+	padding: 7px 12px;
+	display: inline-block;
+	text-align: center;
+	color: #ffffff;
+	text-decoration: none;
+
 }

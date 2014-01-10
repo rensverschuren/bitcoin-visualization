@@ -9,6 +9,7 @@ $(function() {
 				particleSystem = system;
 				particleSystem.screenSize(canvas.width, canvas.height);
 				particleSystem.screenPadding(80);
+				that.initMouseHandling()
 			},
 
 			redraw:function(){
@@ -21,29 +22,36 @@ $(function() {
 				// which allow you to step through the actual node objects but also pass an
 				// x,y point in the screen's coordinate system
 				// 
-				ctx.fillStyle = "#e0e1de";
+				ctx.fillStyle = "#ffffff";
 				ctx.fillRect(0,0, canvas.width, canvas.height);
 				var nodeBoxes = {}
 
 				particleSystem.eachNode(function(node, pt){
-
 					// node: {mass:#, p:{x,y}, name:"", data:{}}
 					// pt:   {x:#, y:#}  node position in screen coords
 
 					// draw a rectangle centered at pt
+
 					var w = 10;
-					ctx.fillStyle = "#e2001a";
+					
+					if(node.data.from) {
+						ctx.fillStyle = "#000000";
+					}
+					else if(!node.data.from) {
+						ctx.fillStyle = node.data.visible ? "#000000" : "#cccccc";
+					}
 					ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
 					nodeBoxes[node.name] = [pt.x-w/2, pt.y-11, w, 22]
 				}); 
 
 				particleSystem.eachEdge(function(edge, pt1, pt2){
+
 					// edge: {source:Node, target:Node, length:#, data:{}}
 					// pt1:  {x:#, y:#}  source position in screen coords
 					// pt2:  {x:#, y:#}  target position in screen coords
 
 					// draw a line from pt1 to pt2
-					ctx.strokeStyle = "rgba(118,188,222	,.5)";
+					ctx.strokeStyle = edge.data.visible ? "#000000" : "#cccccc";
 					ctx.lineWidth = 1;
 					ctx.beginPath();
 					ctx.moveTo(pt1.x, pt1.y);
@@ -66,7 +74,7 @@ $(function() {
 					var wt = !isNaN(weight) ? parseFloat(weight) : 1;
 					var arrowLength = 6 + wt
               		var arrowWidth = 2 + wt
-              		ctx.fillStyle = "#000000"
+              		ctx.fillStyle = edge.data.visible ? "#000000" : "#cccccc";
               		ctx.translate(head.x, head.y);
               		ctx.rotate(Math.atan2(head.y - tail.y, head.x - tail.x));
 
@@ -82,6 +90,17 @@ $(function() {
 					ctx.fill();
 					ctx.restore()
 				});
+			},
+			initMouseHandling:function(){
+				var handler = {
+					clicked:function(e) {
+						var pos = $(canvas).offset();
+						_mouseP = arbor.Point(e.pageX-pos.left, e.pageY-pos.top)
+						selected = nearest = dragged = particleSystem.nearest(_mouseP);
+						console.log(selected);
+					}
+				}
+				$(canvas).mousedown(handler.clicked);
 			}
 		}
 

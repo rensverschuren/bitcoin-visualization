@@ -1,13 +1,28 @@
 <html>
 <head>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<link href="style.css" rel="stylesheet"/>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script src="js/arbor.js"></script>
 	<script src="js/arbor-tween.js"></script>
 	<script src="js/renderer.js"></script>
 	<script src="js/app.js"></script>
-	<link href="style.css" rel="stylesheet"/>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+	
 </head>
 <body>
-	<canvas id="viewport" width="1500" height="900"></canvas>
+	<div class="container">
+		<h1>Bitcoin transactions</h1>
+		<p>This is a visualization of Bitcoin transactions in realtime. Every red square represents a wallet, every connection between them represents money being paid.</p>
+		<canvas id="viewport" width="1280" height="720"></canvas>
+		<p>View transactions with a value higher than:</p>
+		<div class="slider"></div>
+		<p>
+			<span class="value-btc">0</span> BTC<br />
+			<span class="value-eur">0</span> &euro;<br />
+			<span class="value-usd">0</span> $<br />
+		</p>
+	</div>
 </body>
 </html>
