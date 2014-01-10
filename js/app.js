@@ -28,7 +28,7 @@ $(function() {
 			node2 = sys.addNode(to);
 
 			node1.data = { from: true, visible: true };
-			node2.data.from = { from: false, visible: true };
+			node2.data = { from: false, visible: true };
 
 			sys.addEdge(node1, node2, edgeData);
 		});

@@ -34,10 +34,10 @@ $(function() {
 
 					var w = 10;
 					
-					if(node.data.from) {
+					if(node.data.from == true) {
 						ctx.fillStyle = "#000000";
 					}
-					else if(!node.data.from) {
+					else {
 						ctx.fillStyle = node.data.visible ? "#000000" : "#cccccc";
 					}
 					ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
