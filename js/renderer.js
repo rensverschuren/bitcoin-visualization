@@ -32,13 +32,16 @@ $(function() {
 
 					// draw a rectangle centered at pt
 
+					
+
 					var w = 10;
 					
-					if(node.data.from == true) {
+					if(node.data.from === true) {
 						ctx.fillStyle = "#000000";
 					}
 					else {
-						ctx.fillStyle = node.data.visible ? "#000000" : "#cccccc";
+						ctx.fillStyle = node.data.visible ? "rgba(255,0,0,0.5)" : "#cccccc";
+						var w = (node.data.amount * 1.2) + 10;
 					}
 					ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
 					nodeBoxes[node.name] = [pt.x-w/2, pt.y-11, w, 22]
